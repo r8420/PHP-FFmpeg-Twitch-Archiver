@@ -3,12 +3,12 @@ require 'database.php';
 require 'config.php';
 require 'functions.php';
 
-include_once('../twitch/getid3/getid3.php');
+include_once(BASE_PATH . 'getid3/getid3.php');
 
 updateConversionStatus($pdo);
 
 $getID3 = new getID3;
-$path = '../twitch/unprocessed';
+$path = BASE_PATH . 'source';
 $files = array_diff(scandir($path), array('.', '..'));
 ?>
 <!DOCTYPE html>
@@ -150,7 +150,7 @@ $files = array_diff(scandir($path), array('.', '..'));
                         $integrity = "";
 
                         //Get the file size in bytes.
-                        $fileSizeBytes = filesize('../twitch/unprocessed/' . $value);
+                        $fileSizeBytes = filesize(BASE_PATH . 'source/' . $value);
 
                         //Convert the bytes into GB.
                         $fileSizeGB = ($fileSizeBytes / 1024 / 1024 / 1024);
@@ -159,14 +159,14 @@ $files = array_diff(scandir($path), array('.', '..'));
                             $integrity = "Thats a huge bitch";
                         } else {
                             try {
-                                $file_info = $getID3->analyze('../twitch/unprocessed/' . $value);
-                                if ($file_info['video']['resolution_y'] > 1) {
+                                $file_info = $getID3->analyze(BASE_PATH . 'source/' . $value);
+                                if (isset($file_info['video']) && $file_info['video']['resolution_y'] > 1) {
                                     $integrity = "<span style='color:darkgreen'>OK, " . $file_info['video']['resolution_y'] . "p video</span>";
                                 } else {
-                                    if (!file_exists('../twitch/unprocessed/' . $value)) {
+                                    if (!file_exists(BASE_PATH . 'source/' . $value)) {
                                         $integrity = 'File doesn\'t exist';
                                         $processButton = " disabled";
-                                    } elseif (!is_readable('../twitch/unprocessed/' . $value)) {
+                                    } elseif (!is_readable(BASE_PATH . 'source/' . $value)) {
                                         $integrity = 'File can\'t be read';
                                         $processButton = " disabled";
                                     } elseif ($file_info[mime_type] === "video/MP2T") {

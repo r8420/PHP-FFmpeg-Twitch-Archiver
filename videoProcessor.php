@@ -4,12 +4,12 @@ require 'database.php';
 require 'config.php';
 require 'functions.php';
 
-include_once('../twitch/getid3/getid3.php');
+include_once(BASE_PATH . 'getid3/getid3.php');
 
 updateConversionStatus($pdo);
 
 $getID3 = new getID3;
-$path = '../twitch/unprocessed';
+$path = BASE_PATH . 'source';
 $files = array_diff(scandir($path), array('.', '..'));
 
 ?>
@@ -92,7 +92,8 @@ $files = array_diff(scandir($path), array('.', '..'));
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-            <a class="nav-item nav-link active" href="./videoProcessor.php">Status <span class="sr-only">(current)</span></a>
+            <a class="nav-item nav-link active" href="./videoProcessor.php">Status <span
+                        class="sr-only">(current)</span></a>
             <a class="nav-item nav-link" href="./selectStreams.php">Add Streams</a>
             <a class="nav-item nav-link" href="./index.php">Downloader</a>
         </div>
@@ -105,24 +106,27 @@ $files = array_diff(scandir($path), array('.', '..'));
         <?php
         $diskSpaceGB = round(disk_free_space("/") / 1000000000, 2);
 
-        $f = '../twitch/processed';
-        $io = popen('/usr/bin/du -sk ' . $f, 'r');
-        $size = fgets($io, 4096);
-        $size = substr($size, 0, strpos($size, "\t"));
-        pclose($io);
+        if (!WINDOWS) {
+            $f = BASE_PATH . 'original';
+            $io = popen('/usr/bin/du -sk ' . $f, 'r');
+            $size = fgets($io, 4096);
+            $size = substr($size, 0, strpos($size, "\t"));
+            pclose($io);
 
-        echo 'Manually freeable space (by cleaning up the original unprocessed files): <b>' . round($size / 1000000, 2) . ' GB</b>';
+            echo 'Manually freeable space (by cleaning up the original unprocessed files): <b>' . round($size / 1000000, 2) . ' GB</b>';
 
-        $f = '../twitch/unprocessed';
-        $io = popen('/usr/bin/du -sk ' . $f, 'r');
-        $size = fgets($io, 4096);
-        $size = substr($size, 0, strpos($size, "\t"));
-        pclose($io);
+            $f = BASE_PATH . 'source';
+            $io = popen('/usr/bin/du -sk ' . $f, 'r');
+            $size = fgets($io, 4096);
+            $size = substr($size, 0, strpos($size, "\t"));
+            pclose($io);
 
-        echo '<br>Total size of unprocessed streams: <b>' . round($size / 1000000, 2) . ' GB</b>';
+            echo '<br>Total size of unprocessed streams: <b>' . round($size / 1000000, 2) . ' GB</b>';
+        }
 
-        echo '<br>Free disk space: <b>' . $diskSpaceGB . ' GB</b>';
-        if ($diskSpaceGB < 20) {
+
+        echo '<br>Free disk space: <b>' . $diskSpaceGB . ' GB</b><br>';
+        if ($diskSpaceGB < 10) {
             die('SERVER STORAGE ALMOST FULL. ONLY ' . $diskSpaceGB . ' GB LEFT!');
         }
         ?>
@@ -163,7 +167,6 @@ $files = array_diff(scandir($path), array('.', '..'));
             ?>
         </table>
     </div>
-
 
 
     <br>

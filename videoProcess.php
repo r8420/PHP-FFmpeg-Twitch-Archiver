@@ -54,7 +54,7 @@ if (isset($_POST['process'])) {
 
         $data = [
             'title' => $stream['vDate'] . " - " . $stream['vTitle'],
-            'filename' => '../twitch/unprocessed/' . $stream['vFilename'],
+            'filename' => BASE_PATH . 'source/' . $stream['vFilename'],
             'fkey' => $fkey,
             'type' => 'convert',
             'params' => '-threads 1 -movflags +faststart -crf 24 -pix_fmt yuv420p -vcodec libx264 -b:v 0k -s 1280x720 -c:a copy -bsf:a aac_adtstoasc -r 30000/1001' . $enableReplace
