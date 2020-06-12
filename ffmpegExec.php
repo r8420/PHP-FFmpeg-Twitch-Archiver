@@ -39,5 +39,6 @@ if( $ffmpegpw !== FFMPEG_PW )
 // Add status log data showing us the execution is beginning
 $ffmpegConvert->writeStatus('ffmpeg: Executing command '. FFMPEG_PATH .' '. $cmd);
 // Execute the command ... FINALLY!
-exec(FFMPEG_PATH .' '. $cmd);
+exec(FFMPEG_PATH .' '. $cmd, $output);
+
 

@@ -18,7 +18,7 @@ require 'functions.php';
 $type       = _chkVal('type', '');
 $fkey       = _chkVal('fkey', '');
 $infile     = _chkVal('filename', '');
-$outfile    = 'testing.mp4';
+$outfile    = sanitize_file_name(_chkVal('title', '')).".mp4";
 $params     = _chkVal('params', '');
 
 // Check Request Type
@@ -57,7 +57,7 @@ if( $type == 'convert' )
     $ffmpegConvert->exec( $infile, $outfile, $params, $fkey );
     // Add 2 second delay to give the server time to start writing the status log,
     // otherwise $ffmpegConvert->jsonStatus() will trigger an error...
-    sleep(2);
+    sleep(1);
     $ffmpegConvert->jsonStatus();
 }
 
