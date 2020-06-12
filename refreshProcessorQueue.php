@@ -25,7 +25,7 @@ for (; $amountConverting < 4; $amountConverting++) {
             'filename' => BASE_PATH . 'source/' . $filename,
             'fkey' => $fkey,
             'type' => 'convert',
-            'params' => '-threads 1 -movflags +faststart -crf 24 -pix_fmt yuv420p -vcodec libx264 -b:v 0k -s 1280x720 -c:a copy -bsf:a aac_adtstoasc -r 30000/1001 -y'
+            'params' => '-threads 1 -movflags +faststart -crf 24 -pix_fmt yuv420p -vcodec libx264 -b:v 0k -s 1280x720 -c:a copy -bsf:a aac_adtstoasc -r 30000/1001 -max_muxing_queue_size 4096 -y'
         ];
 
         $options = array(

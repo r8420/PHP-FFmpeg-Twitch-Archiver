@@ -27,7 +27,7 @@ $data = [
     'filename' => 'https://vod-secure.twitch.tv/'.$stream['id'].'/chunked/index-dvr.m3u8',
     'fkey' => $fkey,
     'type' => 'convert',
-    'params' => '-threads 2 -movflags +faststart -crf 24 -pix_fmt yuv420p -vcodec libx264 -b:v 0k -s 1280x720 -c:a copy -bsf:a aac_adtstoasc -r 30000/1001 -y'
+    'params' => '-threads 2 -movflags +faststart -crf 24 -pix_fmt yuv420p -vcodec libx264 -b:v 0k -s 1280x720 -c:a copy -bsf:a aac_adtstoasc -r 30000/1001 -max_muxing_queue_size 4096 -y'
 ];
 $options = array(
     'http' => array(

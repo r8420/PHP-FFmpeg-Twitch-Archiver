@@ -35,7 +35,7 @@ if(isset($_POST['queue']) || isset($_POST['queueUnlisted'])){
             $data['status'] = 'Conv_queue_unlisted';
         }
 
-        $sql = "INSERT INTO streams (id, title, game, status, fkey, date) VALUES (:id, :title, :game, :status, :fkey, :date)";
+        $sql = "INSERT IGNORE INTO streams (id, title, game, status, fkey, date) VALUES (:id, :title, :game, :status, :fkey, :date)";
         $stmt = $pdo->prepare($sql);
         $stmt->execute($data);
         echo 'Added to queue: ' . $stream['vTitle'] . '<br>';
@@ -57,7 +57,7 @@ if (isset($_POST['process'])) {
             'filename' => BASE_PATH . 'source/' . $stream['vFilename'],
             'fkey' => $fkey,
             'type' => 'convert',
-            'params' => '-threads 1 -movflags +faststart -crf 24 -pix_fmt yuv420p -vcodec libx264 -b:v 0k -s 1280x720 -c:a copy -bsf:a aac_adtstoasc -r 30000/1001' . $enableReplace
+            'params' => '-threads 1 -movflags +faststart -crf 24 -pix_fmt yuv420p -vcodec libx264 -b:v 0k -s 1280x720 -c:a copy -bsf:a aac_adtstoasc -r 30000/1001 -max_muxing_queue_size 4096' . $enableReplace
         ];
 
         $options = array(
