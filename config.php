@@ -4,6 +4,9 @@
  *
  * @ver     0.2
  */
+
+error_reporting(E_ERROR | E_PARSE);
+
 define('DS', DIRECTORY_SEPARATOR);
 
 define('BASE_PATH', realpath(__DIR__) . DS);
