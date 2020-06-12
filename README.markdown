@@ -16,3 +16,5 @@ Setup a cronjob for refreshqueue.php every hour
 This is if you want to manually upload Twitch Broadcasts
 
 Upload files to the source folder titled in this format: 2019 11 20 22_31_02 Title.mp4
+
+Go to videoProcessor.php to start processing them.
