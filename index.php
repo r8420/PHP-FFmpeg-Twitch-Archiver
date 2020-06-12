@@ -181,29 +181,6 @@ require 'functions.php';
                 <br>
                 <p style="color:red">Older streams are hidden.</p>
             </div>
-            <br><br><hr>
-            <h2>Failed Downloads: (They are probably broken videos and old highlights, just ignore them)</h2>
-            <table id="source_videos" border="1">
-                <tr><th>Thumbnail</th><th width="100%">Info</th></tr>
-                <?php
-                $stmt = $pdo->query('SELECT id, title, date, game FROM streams WHERE status = "ERROR" ORDER BY date ASC');
-                while ($row = $stmt->fetch())
-                {
-                    echo "<tr>";
-                    echo "<td><img src='https://static-cdn.jtvnw.net/s3_vods/".$row['id'] . "/thumb/thumb0-320x180.jpg'></td>";
-                    echo "<td>";
-                    echo "Title: <b>".$row['title'] . "</b><br>";
-                    echo "Date: ".$row['date'] . "<br>";
-                    echo $row['game'] . "<br>";
-                    echo "</td>";
-                    echo "</tr>";
-                }
-                //print("<br><h3>200 Time: ".round(microtime(true) - $microtimeStart,5)."</h3><br>");
-                ?>
-            </table>
 	</center>
-
-	
-	
 </body>
 </html>
