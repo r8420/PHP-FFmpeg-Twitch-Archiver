@@ -640,7 +640,7 @@ class ffmpegConvert
                     $err = 'ffmpeg-progress: FFMPEG progress log does not exist! FILE: `' .
                         $this->logPath . $this->progressLog . '`';
 
-                    $this->addError($err);
+                    // $this->addError($err);
                     exit($err);
                 } else {
                     $err = 'ffmpeg-progress: HTTP error 403 Forbidden! FILE: `' .
