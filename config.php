@@ -27,10 +27,11 @@ define('POST_URL', BASE_URL .'process.php');
 // Execution Script URL (Where the ffmpeg command will be posted to)
 define('EXEC_URL', BASE_URL .'ffmpegExec.php');
 
-$windows = true;
+// Enable if running this on Windows
+define('WINDOWS', true);
 
 // FFMPEG Path
-if($windows){
+if(WINDOWS){
     define('FFMPEG_PATH', 'C:\ffmpeg\bin\ffmpeg.exe');
 } else{
     define('FFMPEG_PATH', '/bin/ffmpeg');
