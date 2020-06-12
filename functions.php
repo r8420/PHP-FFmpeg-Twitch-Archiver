@@ -69,23 +69,17 @@ function import_streams_to_db($pdo)
 {
     $return = 'Auto update failed';
 
+    $channelsAPI = 'https://api.twitch.tv/kraken/channels/';
 
-    $twitch_client_key = "";
-    $channelName = '';
-    $url = 'https://api.twitch.tv/kraken/channels/' . $channelName . '/videos?broadcasts=true&client_id=' . $twitch_client_key . '&limit=100';
-
-    $channelsApi = 'https://api.twitch.tv/kraken/channels/';
-    
-    $clientId = '';
     $ch = curl_init();
 
     curl_setopt_array($ch, array(
         CURLOPT_HTTPHEADER => array(
             'Accept: application/vnd.twitchtv.v5+json',
-            'Client-ID: ' . $clientId
+            'Client-ID: ' . TWITCH_CLIENT_ID
         ),
         CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_URL => $channelsApi . $channelName . "/videos?broadcasts=true&limit=100"
+        CURLOPT_URL => $channelsAPI . CHANNEL_ID . "/videos?broadcast_type=archive&limit=100&offset=1"
     ));
 
     $response = curl_exec($ch);
