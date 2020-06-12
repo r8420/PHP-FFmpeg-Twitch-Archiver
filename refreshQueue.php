@@ -9,7 +9,9 @@ $sql = 'SELECT 1 from streams WHERE status = "Downloading" OR status = "Converti
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
 
-if($stmt->fetchColumn()) echo('There is already a stream being downloaded at the moment.');//die('There is already a stream being downloaded at the moment.');
+if($stmt->fetchColumn())
+//    echo('There is already a stream being downloaded at the moment.');
+    die('There is already a stream being downloaded at the moment.');
 
 $sql = 'SELECT * from streams WHERE status = "Not Downloaded" ORDER BY date ASC LIMIT 1';
 $stmt = $pdo->query($sql);
