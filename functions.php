@@ -442,8 +442,12 @@ class ffmpegConvert
         // Write status message updating us on where the script is at ...
         $this->writeStatus("Sending FFMPEG exec command to " . EXEC_URL . " ...");
 
-
-        $cmd = '-i "' . SOURCE_PATH . $inFile . '" ' . $params . ' "' . OUTPUT_PATH . $outFile . '" 2> ' . $this->logPath . $this->progressLog;
+        // Check if input is URL
+        if (filter_var($inFile, FILTER_VALIDATE_URL)) {
+            $cmd = '-i "' . $inFile . '" ' . $params . ' "' . OUTPUT_PATH . $outFile . '" 2> ' . $this->logPath . $this->progressLog;
+        } else {
+            $cmd = '-i "' . SOURCE_PATH . $inFile . '" ' . $params . ' "' . OUTPUT_PATH . $outFile . '" 2> ' . $this->logPath . $this->progressLog;
+        }
 
         // Write the execution command to the status log
         $this->writeStatus($cmd);
