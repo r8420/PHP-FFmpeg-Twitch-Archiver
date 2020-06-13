@@ -44,11 +44,11 @@ function updateConversionStatus($pdo)
 
         if (strpos($status, 'finished') !== false) {
 
-            if($row['status'] = 'converting'){
+            if ($row['status'] = 'converting') {
                 $sql = "UPDATE streams SET status = 'Finished_A' WHERE streams.fkey = :fkey;";
-            } elseif($row['status'] = 'converting_unlisted'){
+            } elseif ($row['status'] = 'converting_unlisted') {
                 $sql = "UPDATE streams SET status = 'Unlisted' WHERE streams.fkey = :fkey;";
-            } else{
+            } else {
                 $sql = "UPDATE streams SET status = 'Finished_C' WHERE streams.fkey = :fkey;";
             }
 
@@ -58,9 +58,9 @@ function updateConversionStatus($pdo)
             $progressLog = $row['fkey'] . '.ffmpeg.log';
             //unlink(LOG_PATH . $progressLog);
             rename(LOG_PATH . $progressLog, LOG_PATH . $row['fkey'] . '.ffmpeg_done.log');
-            rename(OUTPUT_PATH. 'unprocessed/' .$row['id']. ' ' .$row['title']. '.mp4', OUTPUT_PATH. 'processed/done_' .$row['id']. ' ' .$row['title']. '.mp4');
+            rename(OUTPUT_PATH . 'unprocessed/' . $row['id'] . ' ' . $row['title'] . '.mp4', OUTPUT_PATH . 'processed/done_' . $row['id'] . ' ' . $row['title'] . '.mp4');
         }
-        $return .= "<br>".$status;
+        $return .= "<br>" . $status;
     }
     return $return;
 }
@@ -533,9 +533,16 @@ class ffmpegConvert
     {
         $isFinished = false;
         if (file_exists($this->logPath . $this->progressLog)) {
-            if (exec('grep ' . escapeshellarg('second pass') . ' ' . $this->logPath . $this->progressLog)) {
-                $isFinished = true;
+            if (!WINDOWS) {
+                if (exec('grep ' . escapeshellarg('second pass') . ' ' . $this->logPath . $this->progressLog)) {
+                    $isFinished = true;
+                }
+            } else {
+                if (exec('findstr "second pass" ' . $this->logPath . $this->progressLog)) {
+                    $isFinished = true;
+                }
             }
+
         }
         return strlen($this->progressLog) > 0 && file_exists($this->logPath . $this->progressLog) && $isFinished;
     }
@@ -544,9 +551,16 @@ class ffmpegConvert
     {
         $isforbidden = false;
         if (file_exists($this->logPath . $this->progressLog)) {
-            if (exec('grep ' . escapeshellarg('HTTP error') . ' ' . $this->logPath . $this->progressLog)) {
-                $isforbidden = true;
+            if (!WINDOWS) {
+                if (exec('grep ' . escapeshellarg('HTTP error') . ' ' . $this->logPath . $this->progressLog)) {
+                    $isforbidden = true;
+                }
+            } else {
+                if (exec('findstr "HTTP error" ' . $this->logPath . $this->progressLog)) {
+                    $isforbidden = true;
+                }
             }
+
         }
         return strlen($this->progressLog) > 0 && file_exists($this->logPath . $this->progressLog) && $isforbidden;
     }
