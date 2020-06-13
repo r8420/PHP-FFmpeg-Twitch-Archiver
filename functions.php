@@ -52,13 +52,12 @@ function updateConversionStatus($pdo)
                 $sql = "UPDATE streams SET status = 'Finished_C' WHERE streams.fkey = :fkey;";
             }
 
-//            $sql = "UPDATE streams SET status = 'Finished' WHERE streams.fkey = :fkey AND status =! 'converting_unlisted';";
             $stmt = $pdo->prepare($sql);
             $stmt->execute(['fkey' => $row['fkey']]);
             $progressLog = $row['fkey'] . '.ffmpeg.log';
             //unlink(LOG_PATH . $progressLog);
             rename(LOG_PATH . $progressLog, LOG_PATH . $row['fkey'] . '.ffmpeg_done.log');
-            rename(OUTPUT_PATH . 'unprocessed/' . $row['id'] . ' ' . $row['title'] . '.mp4', OUTPUT_PATH . 'processed/done_' . $row['id'] . ' ' . $row['title'] . '.mp4');
+            rename(SOURCE_PATH . $row['id'] . ' ' . $row['title'] . '.mp4', ORIGINAL_PATH . 'done_' . $row['id'] . ' ' . $row['title'] . '.mp4');
         }
         $return .= "<br>" . $status;
     }
@@ -654,7 +653,7 @@ class ffmpegConvert
                     $err = 'ffmpeg-progress: FFMPEG progress log does not exist! FILE: `' .
                         $this->logPath . $this->progressLog . '`';
 
-                    // $this->addError($err);
+                    $this->addError($err);
                     exit($err);
                 } else {
                     $err = 'ffmpeg-progress: HTTP error 403 Forbidden! FILE: `' .

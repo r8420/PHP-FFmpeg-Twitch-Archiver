@@ -22,7 +22,7 @@ for (; $amountConverting < 4; $amountConverting++) {
 
         $data = [
             'title' => $stream['date'] . " - " . $stream['title'],
-            'filename' => BASE_PATH . 'source/' . $filename,
+            'filename' => $filename,
             'fkey' => $fkey,
             'type' => 'convert',
             'params' => '-threads 1 -movflags +faststart -crf 24 -pix_fmt yuv420p -vcodec libx264 -b:v 0k -s 1280x720 -c:a copy -bsf:a aac_adtstoasc -r 30000/1001 -max_muxing_queue_size 4096 -y'
@@ -39,14 +39,14 @@ for (; $amountConverting < 4; $amountConverting++) {
         $status = file_get_contents(POST_URL, true, $context);
 //        $status = true;
         if ($status) {
-            if($streamStatus = 'Conv_queue_unlisted'){
+            if ($streamStatus = 'Conv_queue_unlisted') {
                 $sql2 = 'UPDATE streams SET status = "converting_unlisted" WHERE id = :id';
-            } elseif($streamStatus = 'Conv_queue'){
+            } elseif ($streamStatus = 'Conv_queue') {
                 $sql2 = 'UPDATE streams SET status = "converting" WHERE id = :id';
             }
 
             $stmt2 = $pdo->prepare($sql2);
-            if($stmt2->execute(['id'=>$stream['id']])){
+            if ($stmt2->execute(['id' => $stream['id']])) {
                 echo 'Started converting: ' . $stream['title'] . '<br>';
             }
         }

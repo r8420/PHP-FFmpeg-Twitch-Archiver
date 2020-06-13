@@ -13,9 +13,9 @@ START TRANSACTION;
 SET time_zone = "+00:00";
 
 
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT = @@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS = @@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION = @@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
 --
@@ -31,14 +31,16 @@ USE `twitch_dl`;
 --
 
 DROP TABLE IF EXISTS `streams`;
-CREATE TABLE `streams` (
-  `id` varchar(57) NOT NULL,
-  `title` varchar(200) NOT NULL,
-  `game` varchar(100) CHARACTER SET utf8 NOT NULL,
-  `status` varchar(25) NOT NULL,
-  `fkey` varchar(8) NOT NULL,
-  `date` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE `streams`
+(
+    `id`     varchar(57)                     NOT NULL,
+    `title`  varchar(200)                    NOT NULL,
+    `game`   varchar(100) CHARACTER SET utf8 NOT NULL,
+    `status` varchar(25)                     NOT NULL,
+    `fkey`   varchar(8)                      NOT NULL,
+    `date`   datetime                        NOT NULL
+) ENGINE = InnoDB
+  DEFAULT CHARSET = latin1;
 
 --
 -- Indexen voor geëxporteerde tabellen
@@ -48,9 +50,9 @@ CREATE TABLE `streams` (
 -- Indexen voor tabel `streams`
 --
 ALTER TABLE `streams`
-  ADD PRIMARY KEY (`id`);
+    ADD PRIMARY KEY (`id`);
 COMMIT;
 
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40101 SET CHARACTER_SET_CLIENT = @OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS = @OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION = @OLD_COLLATION_CONNECTION */;

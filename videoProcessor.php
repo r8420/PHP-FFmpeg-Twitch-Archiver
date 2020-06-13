@@ -9,8 +9,7 @@ include_once(BASE_PATH . 'getid3/getid3.php');
 updateConversionStatus($pdo);
 
 $getID3 = new getID3;
-$path = BASE_PATH . 'source';
-$files = array_diff(scandir($path), array('.', '..'));
+$files = array_diff(scandir(SOURCE_PATH), array('.', '..'));
 
 ?>
 <!DOCTYPE html>
@@ -107,16 +106,14 @@ $files = array_diff(scandir($path), array('.', '..'));
         $diskSpaceGB = round(disk_free_space("/") / 1000000000, 2);
 
         if (!WINDOWS) {
-            $f = BASE_PATH . 'original';
-            $io = popen('/usr/bin/du -sk ' . $f, 'r');
+            $io = popen('/usr/bin/du -sk ' . ORIGINAL_PATH, 'r');
             $size = fgets($io, 4096);
             $size = substr($size, 0, strpos($size, "\t"));
             pclose($io);
 
             echo 'Manually freeable space (by cleaning up the original unprocessed files): <b>' . round($size / 1000000, 2) . ' GB</b>';
 
-            $f = BASE_PATH . 'source';
-            $io = popen('/usr/bin/du -sk ' . $f, 'r');
+            $io = popen('/usr/bin/du -sk ' . SOURCE_PATH, 'r');
             $size = fgets($io, 4096);
             $size = substr($size, 0, strpos($size, "\t"));
             pclose($io);

@@ -13,11 +13,10 @@ require 'functions.php';
 //if ($stmt->fetchColumn()) echo('(Overload protection: <span style="color:red">OFF</span>) There is already a stream being converted or downloaded at the moment.<br>');
 
 
-
-if(isset($_POST['queue']) || isset($_POST['queueUnlisted'])){
-    if(isset($_POST['queueUnlisted'])){
+if (isset($_POST['queue']) || isset($_POST['queueUnlisted'])) {
+    if (isset($_POST['queueUnlisted'])) {
         $unlisted = true;
-    } else{
+    } else {
         $unlisted = false;
     }
     unset($_POST['queue'], $_POST['queueUnlisted']);
@@ -31,7 +30,7 @@ if(isset($_POST['queue']) || isset($_POST['queueUnlisted'])){
             'fkey' => $fkey,
             'date' => $stream['vDate'],
         ];
-        if($unlisted){
+        if ($unlisted) {
             $data['status'] = 'Conv_queue_unlisted';
         }
 
@@ -54,7 +53,7 @@ if (isset($_POST['process'])) {
 
         $data = [
             'title' => $stream['vDate'] . " - " . $stream['vTitle'],
-            'filename' => BASE_PATH . 'source/' . $stream['vFilename'],
+            'filename' => $stream['vFilename'],
             'fkey' => $fkey,
             'type' => 'convert',
             'params' => '-threads 1 -movflags +faststart -crf 24 -pix_fmt yuv420p -vcodec libx264 -b:v 0k -s 1280x720 -c:a copy -bsf:a aac_adtstoasc -r 30000/1001 -max_muxing_queue_size 4096' . $enableReplace

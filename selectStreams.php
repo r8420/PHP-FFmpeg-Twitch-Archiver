@@ -8,8 +8,7 @@ include_once(BASE_PATH . 'getid3/getid3.php');
 updateConversionStatus($pdo);
 
 $getID3 = new getID3;
-$path = BASE_PATH . 'source';
-$files = array_diff(scandir($path), array('.', '..'));
+$files = array_diff(scandir(SOURCE_PATH), array('.', '..'));
 ?>
 <!DOCTYPE html>
 <head>
@@ -99,7 +98,8 @@ $files = array_diff(scandir($path), array('.', '..'));
             flex: 1 1 auto;
             margin-right: unset;
         }
-        .checkbox-label{
+
+        .checkbox-label {
             width: 1%;
         }
     </style>
@@ -150,7 +150,7 @@ $files = array_diff(scandir($path), array('.', '..'));
                         $integrity = "";
 
                         //Get the file size in bytes.
-                        $fileSizeBytes = filesize(BASE_PATH . 'source/' . $value);
+                        $fileSizeBytes = filesize(SOURCE_PATH . $value);
 
                         //Convert the bytes into GB.
                         $fileSizeGB = ($fileSizeBytes / 1024 / 1024 / 1024);
@@ -159,14 +159,14 @@ $files = array_diff(scandir($path), array('.', '..'));
                             $integrity = "Thats a huge bitch";
                         } else {
                             try {
-                                $file_info = $getID3->analyze(BASE_PATH . 'source/' . $value);
+                                $file_info = $getID3->analyze(SOURCE_PATH . $value);
                                 if (isset($file_info['video']) && $file_info['video']['resolution_y'] > 1) {
                                     $integrity = "<span style='color:darkgreen'>OK, " . $file_info['video']['resolution_y'] . "p video</span>";
                                 } else {
-                                    if (!file_exists(BASE_PATH . 'source/' . $value)) {
+                                    if (!file_exists(SOURCE_PATH . $value)) {
                                         $integrity = 'File doesn\'t exist';
                                         $processButton = " disabled";
-                                    } elseif (!is_readable(BASE_PATH . 'source/' . $value)) {
+                                    } elseif (!is_readable(SOURCE_PATH . $value)) {
                                         $integrity = 'File can\'t be read';
                                         $processButton = " disabled";
                                     } elseif ($file_info[mime_type] === "video/MP2T") {
@@ -176,7 +176,7 @@ $files = array_diff(scandir($path), array('.', '..'));
                                         $integrity = "<span style='color:darkred'>FAILED</span>";
                                         $processButton = " disabled";
                                     } elseif (isset($file_info[mime_type])) {
-                                        $integrity = "<span style='color:darkred'>Corrupted or " . explode('/',$file_info[mime_type])[1] . " video</span>";
+                                        $integrity = "<span style='color:darkred'>Corrupted or " . explode('/', $file_info[mime_type])[1] . " video</span>";
                                         $processButton = " disabled";
                                     } else {
                                         $integrity = "<span style='color:darkred'>I don't even know</span>";
