@@ -33,7 +33,7 @@ USE `twitch_dl`;
 DROP TABLE IF EXISTS `streams`;
 CREATE TABLE `streams`
 (
-    `id`     varchar(57)                     NOT NULL,
+    `id`     varchar(70)                     NOT NULL,
     `title`  varchar(200)                    NOT NULL,
     `game`   varchar(100) CHARACTER SET utf8 NOT NULL,
     `status` varchar(25)                     NOT NULL,
