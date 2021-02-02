@@ -23,9 +23,9 @@ blockquote:before, blockquote:after, q:before, q:after {
 }
 
 a {
+    font-size: 100%;
     margin: 0;
     padding: 0;
-    font-size: 100%;
     vertical-align: baseline;
     background: transparent
 }
@@ -35,14 +35,14 @@ del {
 }
 
 abbr[title], dfn[title] {
-    border-bottom: 1px dotted #000;
     cursor: help
+    border-bottom: 1px dotted #000;
 }
 
 /* tables still need cellspacing="0" in the markup */
 table {
-    border-collapse: collapse;
     border-spacing: 0
+    border-collapse: collapse;
 }
 
 th {
@@ -58,10 +58,10 @@ td {
 hr {
     display: block;
     height: 1px;
-    border: 0;
-    border-top: 1px solid #CCC;
     margin: 1em 0;
     padding: 0
+    border: 0;
+    border-top: 1px solid #CCC;
 }
 
 input, select {
@@ -93,8 +93,8 @@ select, input, textarea {
 }
 
 table {
-    font-size: inherit;
     font: 100%
+    font-size: inherit;
 }
 
 /* Accessible focus treatment
@@ -148,8 +148,8 @@ button, input, select, textarea {
 
 /* make buttons play nice in IE */
 button {
-    width: auto;
     overflow: visible
+    width: auto;
 }
 
 /* scale images in IE7 more attractively */
@@ -164,20 +164,20 @@ button {
 
 /* let's clear some floats */
 .clear {
-    clear: both;
     display: block;
-    overflow: hidden;
     visibility: hidden;
+    clear: both;
+    overflow: hidden;
     width: 0;
     height: 0
 }
 
 .clearfix:before, .clearfix:after {
-    content: "\0020";
     display: block;
-    height: 0;
     overflow: hidden;
     width: 0
+    height: 0;
+    content: "\0020";
 }
 
 .clearfix:after {
@@ -201,8 +201,8 @@ button {
 body {
     font-family: Optima, Segoe, "Segoe UI", Candara, Calibri, Arial, sans-serif;
     padding: 0 15px;
-    background-color: #222;
     color: lightgray;
+    background-color: #222;
 }
 
 h1 {
@@ -219,8 +219,8 @@ td img {
 }
 
 label {
-    float: left;
     font-weight: 800;
+    float: left;
     margin-right: 15px;
 }
 
@@ -239,17 +239,17 @@ table {
 
 #videos a {
     display: block;
-    width: 16.6%;
+    float: left;
     overflow: hidden;
+    box-sizing: border-box;
+    width: 16.6%;
     margin-top: 10px;
     margin-bottom: 10px;
-    box-sizing: border-box;
     padding: 0 10px;
-    float: left;
     cursor: pointer;
+    text-align: left;
     text-decoration: none;
     outline: 0;
-    text-align: left;
 }
 
 @media only screen and (max-width: 768px) {
@@ -277,27 +277,27 @@ table {
 }
 
 #overlay {
-    background: rgba(0, 0, 0, 0.8);
     position: fixed;
+    z-index: 99999;
     top: 0;
     right: 0;
-    left: 0;
     bottom: 0;
+    left: 0;
+    display: none;
     width: 100%;
     height: 100%;
-    z-index: 99999;
-    display: none;
+    background: rgba(0, 0, 0, 0.8);
 }
 
 #overlay .modal {
-    background: #fff;
-    border-radius: 5px;
+    position: relative;
     width: 90%;
-    margin: 100px auto;
     max-width: 1000px;
     min-height: 100px;
-    position: relative;
+    margin: 100px auto;
     padding: 30px 20px 15px;
+    border-radius: 5px;
+    background: #fff;
 }
 
 #overlay .modal #close {

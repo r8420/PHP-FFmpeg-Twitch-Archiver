@@ -10,7 +10,6 @@ function pad(number, length) {
     return str;
 }
 
-
 function initPoll(fkey) {
     var statusData;
 
@@ -87,7 +86,6 @@ function startPolling(data, fkey) {
             totalTime = statData.time_total;
             hrCurrentTime = statData.time_encoded_min;
             hrTotalTime = statData.time_total_min;
-
 
             topLoader[fkey].setProgress(currentTime / totalTime);
             topLoader[fkey].setValue(hrCurrentTime + ' / ' + hrTotalTime);
