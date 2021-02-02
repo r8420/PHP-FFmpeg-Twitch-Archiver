@@ -45,7 +45,7 @@ function updateConversionStatus($pdo)
         if (strpos($status, 'finished') !== false) {
 
             if ($row['status'] = 'converting') {
-                $sql = "UPDATE streams SET status = 'Finished_A' WHERE streams.fkey = :fkey;";
+                $sql = "UPDATE streams SET status = 'Finished' WHERE streams.fkey = :fkey;";
             } elseif ($row['status'] = 'converting_unlisted') {
                 $sql = "UPDATE streams SET status = 'Unlisted' WHERE streams.fkey = :fkey;";
             } else {

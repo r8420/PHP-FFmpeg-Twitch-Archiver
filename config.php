@@ -11,7 +11,7 @@ define('DS', DIRECTORY_SEPARATOR);
 
 define('BASE_PATH', realpath(__DIR__) . DS);
 
-$_protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != "off") ? "https" : "http";
+$_protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== "off") ? "https" : "http";
 
 define('BASE_URL', $_protocol . "://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']) . '/');
 
@@ -37,8 +37,10 @@ define('POST_URL', BASE_URL . 'process.php');
 // Execution Script URL (Where the ffmpeg command will be posted to)
 define('EXEC_URL', BASE_URL . 'ffmpegExec.php');
 
-// Enable if running this on Windows
+// Enable if running this on Windows. Disable when running Linux.
 define('WINDOWS', true);
+// Maximum concurrent stream conversion
+define('MAX_CONCURRENT_STREAMS', 2);
 
 // FFMPEG Path
 if (WINDOWS) {
@@ -58,9 +60,13 @@ define('TWITCH_CLIENT_ID', 'CHANGE_THIS');
 // To get Channel-ID run: curl -H "Accept: application/vnd.twitchtv.v5+json" -H "Client-ID: YOUR_CLIENT_ID" -X GET https://api.twitch.tv/kraken/users?login=USERNAME_OF_TWITCH_USER
 define('CHANNEL_ID', 'CHANGE_THIS');
 
+date_default_timezone_set('America/Los_Angeles');
 
-if (!file_exists(OUTPUT_PATH))
-    mkdir(OUTPUT_PATH, 0755, true);
 
-if (!file_exists(LOG_PATH))
-    mkdir(LOG_PATH, 0755, true);
+if (!file_exists(OUTPUT_PATH) && !mkdir($concurrentDirectory = OUTPUT_PATH, 0755, true) && !is_dir($concurrentDirectory)) {
+    throw new RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
+}
+
+if (!file_exists(LOG_PATH) && !mkdir($concurrentDirectory = LOG_PATH, 0755, true) && !is_dir($concurrentDirectory)) {
+    throw new RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
+}

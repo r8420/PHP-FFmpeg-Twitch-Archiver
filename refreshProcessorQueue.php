@@ -12,7 +12,7 @@ echo('Converting: ' . $amountConverting . '<br>');
 
 $stmt = $pdo->query('SELECT id, title, date, game, status FROM streams WHERE status = "Conv_queue" OR status = "Conv_queue_unlisted" ORDER BY date ASC');
 
-for (; $amountConverting < 4; $amountConverting++) {
+for (; $amountConverting < MAX_CONCURRENT_STREAMS; $amountConverting++) {
     $stream = $stmt->fetch();
     $streamStatus = $stream['status'];
 
@@ -52,9 +52,7 @@ for (; $amountConverting < 4; $amountConverting++) {
         }
         print_r($stream);
     }
-
-
-//    print_r($stream);
     echo '<br>';
 }
 
+echo '<a href="videoProcessor.php">Go back</a>';
