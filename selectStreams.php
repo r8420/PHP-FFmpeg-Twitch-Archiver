@@ -251,7 +251,7 @@ HTML;
 
                     $checkboxDisabled = 'disabled';
                     if (in_array($vDate, $streamDates, true)) {
-                        $checkboxInfo = "<span style='color:deepskyblue'>Already Converting </span>";
+                        $checkboxInfo = "<span style='color:deepskyblue'>Converting </span>";
                     } elseif (in_array($vDate, $queueDates, true)) {
                         $checkboxInfo = "<span style='color:forestgreen'>In Queue </span>";
                     } else {
