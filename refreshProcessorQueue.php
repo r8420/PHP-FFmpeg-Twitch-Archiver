@@ -52,6 +52,9 @@ for (; $amountConverting < MAX_CONCURRENT_STREAMS; $amountConverting++) {
         }
         print_r($stream);
     }
+
+
+//    print_r($stream);
     echo '<br>';
 }
 

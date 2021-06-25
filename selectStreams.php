@@ -1,4 +1,5 @@
 <?php
+ini_set("memory_limit","512M");
 require 'database.php';
 require 'config.php';
 require 'functions.php';
@@ -223,8 +224,8 @@ HTML;
 
                 <input name="queue" class="btn btn-secondary" type="submit"
                        value="Add To Queue"<?php echo $processButton; ?>>
-                <input name="queueUnlisted" class="btn btn-secondary" type="submit"
-                       value="Add To Queue as unlisted"<?php echo $processButton; ?>>
+                <!-- <input name="queueUnlisted" class="btn btn-secondary" type="submit" -->
+                       <!-- value="Add To Queue as unlisted"<?php echo $processButton; ?>> -->
                 <br>
             </form>
         </div>
@@ -251,7 +252,7 @@ HTML;
 
                     $checkboxDisabled = 'disabled';
                     if (in_array($vDate, $streamDates, true)) {
-                        $checkboxInfo = "<span style='color:deepskyblue'>Converting </span>";
+                        $checkboxInfo = "<span style='color:deepskyblue'>Already Converting </span>";
                     } elseif (in_array($vDate, $queueDates, true)) {
                         $checkboxInfo = "<span style='color:forestgreen'>In Queue </span>";
                     } else {

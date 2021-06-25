@@ -129,8 +129,7 @@ $files = array_diff(scandir(SOURCE_PATH), array('.', '..'));
         ?>
     </div>
     <div class="my-3 p-3 bg-white rounded box-shadow">
-        <h6 class="pb-2 mb-0">Currently Converting<a style="float:right" href="refreshProcessorQueue.php">Update queue
-                now</a></h6>
+        <h6 class="pb-2 mb-0">Currently Converting<a style="float:right" href="refreshProcessorQueue.php">Update queue now</a></h6>
         <table class="table">
             <tr>
                 <th>Progress</th>

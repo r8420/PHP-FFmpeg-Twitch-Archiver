@@ -53,10 +53,10 @@ echo import_streams_to_db($pdo);
             echo "<td>";
             ?>
             <div class="progress"
-                 id="progress<?php echo hash('crc32', 'https://vod-secure.twitch.tv/' . $row['id'] . '/chunked/index-dvr.m3u8', false); ?>"></div>
-            <script>initPoll('<?php echo hash('crc32', 'https://vod-secure.twitch.tv/' . $row['id'] . '/chunked/index-dvr.m3u8', false);?>')</script>
+                 id="progress<?php echo hash('crc32', $row['id'], false); ?>"></div>
+            <script>initPoll('<?php echo hash('crc32', $row['id'], false);?>')</script>
             <?php
-            echo "</td><td><img src='https://static-cdn.jtvnw.net/s3_vods/" . $row['id'] . "/thumb/thumb0-320x180.jpg'></td>";
+            echo "</td><td><img src='https://static-cdn.jtvnw.net/cf_vods/" . TWITCH_ID . '/' . $row['id'] . "/thumb/thumb0-320x180.jpg'></td>";
 
             echo "<td>";
             echo "Title: <b>" . $row['title'] . "</b><br>";
@@ -65,7 +65,7 @@ echo import_streams_to_db($pdo);
             ?>
 
             <?php
-            // <button onclick="alert(JSON.stringify(pollStatus('<?php echo hash('crc32', 'https://vod-secure.twitch.tv/'.$row['id'].'/chunked/index-dvr.m3u8', false);&>'),null,4))">Check status</button>
+            // <button onclick="alert(JSON.stringify(pollStatus('<?php echo hash('crc32', $row['id'], false);&>'),null,4))">Check status</button>
             echo "</td>";
             echo "</tr>";
         }
@@ -114,13 +114,13 @@ echo import_streams_to_db($pdo);
             $stmt = $pdo->query('SELECT id, title, date, game FROM streams WHERE status = "not downloaded" ORDER BY date ASC');
             while ($row = $stmt->fetch()) {
                 echo "<tr>";
-                echo "<td><img src='https://static-cdn.jtvnw.net/s3_vods/" . $row['id'] . "/thumb/thumb0-320x180.jpg'></td>";
+                echo "<td><img src='https://static-cdn.jtvnw.net/cf_vods/" . TWITCH_ID . '/' . $row['id'] . "/thumb/thumb0-320x180.jpg'></td>";
                 echo "<td>";
                 echo "Title: <b>" . $row['title'] . "</b><br>";
                 echo "Date: " . $row['date'] . "<br>";
                 echo $row['game'] . "<br>";
                 ?>
-                <!-- <button class="dl" data-title="<?php echo $row['date'] . ' - ' . $row['title']; ?>" data-filename="<?php echo 'https://vod-secure.twitch.tv/' . $row['id'] . '/chunked/index-dvr.m3u8'; ?>" data-fkey="<?php echo hash('crc32', 'https://vod-secure.twitch.tv/' . $row['id'] . '/chunked/index-dvr.m3u8', false); ?>">Download</button> -->
+                <!-- <button class="dl" data-title="<?php echo $row['date'] . ' - ' . $row['title']; ?>" data-filename="<?php echo TWITCH_URL . $row['id'] . '/chunked/index-dvr.m3u8'; ?>" data-fkey="<?php echo hash('crc32', $row['id'], false); ?>">Download</button> -->
                 <?php
                 echo "</td>";
                 echo "</tr>";

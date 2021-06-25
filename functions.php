@@ -93,7 +93,7 @@ function import_streams_to_db($pdo)
     foreach ($result['videos'] as $vid) {
 
         $pieces = explode("/", $vid['animated_preview_url']);
-        $fkey = hash('crc32', 'https://vod-secure.twitch.tv/' . $pieces[3] . '/chunked/index-dvr.m3u8', false);
+        $fkey = hash('crc32', $pieces[3], false);
         $data = [
             'id' => $pieces[3],
             'title' => $vid['title'],
@@ -125,10 +125,14 @@ function import_streams_to_db($pdo)
             $stmt = $pdo->prepare($sql);
             $stmt->execute(['id' => $pieces[3]]);
         } elseif (strpos($status, 'finished') !== false) {
+            try{
+                $thumbnail = file_get_contents('https://static-cdn.jtvnw.net/cf_vods/'. TWITCH_ID . '/' . $pieces[3] . '/thumb/thumb0-320x180.jpg');
+                $img = OUTPUT_PATH . 'img' . DS . $pieces[3] . '.webp';
+                file_put_contents($img, $thumbnail);
+            } catch (Exception $e){
 
-            $thumbnail = file_get_contents('https://static-cdn.jtvnw.net/s3_vods/' . $pieces[3] . '/thumb/thumb0-320x180.jpg');
-            $img = OUTPUT_PATH . 'img' . DS . $pieces[3] . '.jpg';
-            file_put_contents($img, $thumbnail);
+            }
+
 
 
             $sql = "UPDATE streams SET status = 'Finished' WHERE streams.fkey = :fkey;";

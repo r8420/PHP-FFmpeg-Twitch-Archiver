@@ -11,7 +11,7 @@ define('DS', DIRECTORY_SEPARATOR);
 
 define('BASE_PATH', realpath(__DIR__) . DS);
 
-$_protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== "off") ? "https" : "http";
+$_protocol = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != "off") ? "https" : "http";
 
 define('BASE_URL', $_protocol . "://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['SCRIPT_NAME']) . '/');
 
@@ -37,10 +37,14 @@ define('POST_URL', BASE_URL . 'process.php');
 // Execution Script URL (Where the ffmpeg command will be posted to)
 define('EXEC_URL', BASE_URL . 'ffmpegExec.php');
 
-// Enable if running this on Windows. Disable when running Linux.
-define('WINDOWS', true);
+// Enable if running this on Windows
+define('WINDOWS', false);
 // Maximum concurrent stream conversion
 define('MAX_CONCURRENT_STREAMS', 2);
+define('TWITCH_ID', 'CHANGE_THIS');
+
+// Set url of twitch CDN
+define('TWITCH_URL', 'https://'.TWITCH_ID.'.cloudfront.net/');
 
 // FFMPEG Path
 if (WINDOWS) {
